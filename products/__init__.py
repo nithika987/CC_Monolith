@@ -1,7 +1,8 @@
 from products import dao
+from typing import List
 
 class Product:
-    def _init_(self, id: int, name: str, description: str, cost: float, qty: int = 0):
+    def __init__(self, id: int, name: str, description: str, cost: float, qty: int = 0):
         self.id = id
         self.name = name
         self.description = description
@@ -19,12 +20,10 @@ class Product:
             qty=data.get('qty', 0)
         )
 
-def list_products() -> list[Product]:
+def list_products() -> List[Product]:
     """Retrieve all products from the DAO and return them as Product objects."""
-    products = dao.list_products()
-    
-    # Use list comprehension for better readability and performance
-    return [Product.load(product) for product in products]
+    products_data = dao.list_products()
+    return [Product.load(product) for product in products_data]
 
 def get_product(product_id: int) -> Product:
     """Retrieve a single product by its ID."""
